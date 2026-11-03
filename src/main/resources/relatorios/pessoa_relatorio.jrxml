@@ -1,0 +1,76 @@
+<!-- Created with Jaspersoft Studio version 7.0.8.final using JasperReports Library version 7.0.8-6f896111  -->
+<jasperReport name="Simple_Blue" language="java" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4324e6b5-4ef3-4c15-9f36-d279b2988d8a">
+    <property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+    <property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
+    <query language="SQL"><![CDATA[SELECT id,
+	cpf
+FROM pessoa]]></query>
+    <field name="id" class="java.lang.Long">
+        <property name="com.jaspersoft.studio.field.name" value="id"/>
+        <property name="com.jaspersoft.studio.field.label" value="id"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="pessoa"/>
+    </field>
+    <field name="cpf" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.name" value="cpf"/>
+        <property name="com.jaspersoft.studio.field.label" value="cpf"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="pessoa"/>
+    </field>
+    <group name="Group1">
+        <expression><![CDATA[$F{id}]]></expression>
+        <groupHeader>
+            <band height="33">
+                <element kind="staticText" uuid="87dd6c9c-aeaa-42aa-ac48-72a3acf2b316" x="0" y="0" width="100" height="32" forecolor="#666666" backcolor="#E6E6E6" mode="Opaque" fontSize="12.0">
+                    <text><![CDATA[id]]></text>
+                </element>
+                <element kind="textField" uuid="a6fb84e4-2612-42ac-bb70-8aec677bf70c" x="100" y="0" width="455" height="32" forecolor="#006699" backcolor="#E6E6E6" mode="Opaque" fontSize="24.0" bold="true">
+                    <expression><![CDATA[$F{id}]]></expression>
+                </element>
+                <element kind="line" uuid="4c7c5cdd-4127-40ff-a4dc-f872e495c124" x="-20" y="32" width="595" height="1" forecolor="#666666"/>
+            </band>
+        </groupHeader>
+        <groupFooter>
+            <band/>
+        </groupFooter>
+    </group>
+    <background/>
+    <title height="72">
+        <element kind="frame" uuid="d58837de-00d7-4e0a-9599-8358ab43b807" x="-20" y="-20" width="595" height="92" backcolor="#006699" mode="Opaque">
+            <element kind="staticText" uuid="551f24d9-aa92-4503-bf8b-f80ef5692a7d" x="20" y="20" width="234" height="43" forecolor="#FFFFFF" fontSize="20.0" bold="true">
+                <text><![CDATA[MEU RELATORIO]]></text>
+            </element>
+            <element kind="staticText" uuid="f17689ec-f922-432a-888b-3087532eb444" x="395" y="43" width="180" height="20" forecolor="#FFFFFF" fontSize="14.0" bold="false" hTextAlign="Right">
+                <text><![CDATA[TESTE FEITO EM SALA]]></text>
+            </element>
+        </element>
+    </title>
+    <pageHeader height="13"/>
+    <columnHeader height="21">
+        <element kind="line" uuid="ff2a744b-fd54-418c-a0d6-5fe46a540aca" x="-20" y="20" width="595" height="1" forecolor="#666666"/>
+        <element kind="staticText" uuid="62f35002-b066-44e4-bdb8-ecccee15413b" x="0" y="0" width="555" height="20" forecolor="#006699" backcolor="#E6E6E6" mode="Opaque" fontSize="14.0" bold="true" hTextAlign="Center">
+            <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ec4837e0-cde9-468b-9833-eb98ecc5dde2"/>
+            <text><![CDATA[cpf]]></text>
+        </element>
+    </columnHeader>
+    <detail>
+        <band height="20">
+            <element kind="line" uuid="7accc1ba-e75f-4c54-9da4-e872ff7d9479" x="0" y="19" width="555" height="1" positionType="FixRelativeToBottom"/>
+            <element kind="textField" uuid="324e9a19-e146-4a38-9da9-ffa70a6f52ec" x="0" y="0" width="555" height="20" fontSize="14.0" textAdjust="StretchHeight">
+                <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ec4837e0-cde9-468b-9833-eb98ecc5dde2"/>
+                <expression><![CDATA[$F{cpf}]]></expression>
+            </element>
+        </band>
+    </detail>
+    <columnFooter/>
+    <pageFooter height="17">
+        <element kind="textField" uuid="9158b716-20cc-4c69-a696-90d785f8fabf" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" mode="Opaque" hTextAlign="Right">
+            <expression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></expression>
+        </element>
+        <element kind="textField" uuid="ef8e54da-9f2c-4113-8786-7e47aba8626b" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" mode="Opaque" evaluationTime="Report">
+            <expression><![CDATA[" " + $V{PAGE_NUMBER}]]></expression>
+        </element>
+        <element kind="textField" uuid="083a97e7-6e20-4bea-a651-57442ac7cfec" x="0" y="4" width="100" height="13" pattern="EEEEE dd MMMMM yyyy">
+            <expression><![CDATA[new java.util.Date()]]></expression>
+        </element>
+    </pageFooter>
+    <summary/>
+</jasperReport>
