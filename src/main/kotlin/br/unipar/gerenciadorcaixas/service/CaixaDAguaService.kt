@@ -43,7 +43,7 @@ class CaixaDAguaService(
         }
         //Usa o id que já existe pra atualizar
         val atualizada = CaixaDAgua(resposta.id, caixa.marca, caixa.modelo, caixa.dimensao,
-            caixa.cor, caixa.material, caixa.formato, caixa.preco)
+            caixa.cor, caixa.material, caixa.formato, caixa.preco, caixa.funcionario)
 
         repository.save(atualizada)
         return ResponseEntity.status(HttpStatus.OK)

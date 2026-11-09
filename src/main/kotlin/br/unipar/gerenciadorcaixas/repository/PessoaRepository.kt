@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface PessoaRepository : JpaRepository<Pessoa, Long> {
-    fun findByCpf(cpf : String) : Pessoa?
 }

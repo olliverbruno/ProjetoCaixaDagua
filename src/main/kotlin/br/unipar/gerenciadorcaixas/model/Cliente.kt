@@ -4,7 +4,7 @@ import jakarta.persistence.Entity
 
 @Entity
 class Cliente(
-    id : Long,
+    id : Long = 0L,
     cpf : String,
     val nome : String,
 ): Pessoa(id, cpf)  {

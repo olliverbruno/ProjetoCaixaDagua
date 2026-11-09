@@ -1,7 +1,7 @@
 package br.unipar.gerenciadorcaixas.controller
 
-import br.unipar.gerenciadorcaixas.model.Pessoa
-import br.unipar.gerenciadorcaixas.service.PessoaService
+import br.unipar.gerenciadorcaixas.model.Funcionario
+import br.unipar.gerenciadorcaixas.service.FuncionarioService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -14,26 +14,26 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @CrossOrigin(origins = ["*"])
-@RequestMapping("/pessoa")
-class PessoaController (
-    private val servico : PessoaService
+@RequestMapping("/funcionario")
+class FuncionarioController (
+    private val servico : FuncionarioService
 ){
 
     @GetMapping("/listar")
-    fun listar() : ResponseEntity<List<Pessoa>>{
+    fun listar() : ResponseEntity<List<Funcionario>>{
         return servico.listar()
 
     }
 
     //Para criar variáveis na URL use {}
     @GetMapping("/buscar/{id}")
-    fun buscar(@PathVariable id : Long) : ResponseEntity<Pessoa>{
+    fun buscar(@PathVariable id : Long) : ResponseEntity<Funcionario>{
         return servico.buscar(id)
     }
 
     @PostMapping("/salvar")
-    fun salvar(@RequestBody pessoa : Pessoa) : ResponseEntity<String> {
-        return servico.salvar(pessoa)
+    fun salvar(@RequestBody funcionario : Funcionario) : ResponseEntity<String> {
+        return servico.salvar(funcionario)
 
     }
 

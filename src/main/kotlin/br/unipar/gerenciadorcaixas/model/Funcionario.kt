@@ -5,7 +5,7 @@ import java.math.BigDecimal
 
 @Entity
 class Funcionario (
-    id : Long,
+    id : Long = 0L,
     cpf : String,
     val salario : BigDecimal = BigDecimal.ZERO
 ): Pessoa(id, cpf) {
