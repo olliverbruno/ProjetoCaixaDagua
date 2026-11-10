@@ -14,6 +14,9 @@ class FuncionarioService(
 ) {
 
         fun salvar(funcionario: Funcionario): ResponseEntity<String> {
+            if(funcionario.cidade.isBlank()){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cidade não pode ser vazia")
+            }
             if(validar.validarCpfViaAPI(funcionario.cpf)){
                 println("CPF Válido!")
                 repository.save(funcionario)

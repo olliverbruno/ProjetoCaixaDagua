@@ -14,6 +14,9 @@ class ClienteService(
 ) {
 
         fun salvar(cliente: Cliente): ResponseEntity<String> {
+            if(cliente.cidade.isBlank()){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cidade não pode ser vazia")
+            }
             if(validar.validarCpfViaAPI(cliente.cpf)){
                 println("CPF Válido!")
                 repository.save(cliente)

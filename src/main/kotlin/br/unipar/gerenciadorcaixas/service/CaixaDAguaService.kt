@@ -34,7 +34,7 @@ class CaixaDAguaService(
     }
 
     fun buscarMarca(marca : String) : List<CaixaDAgua>{
-        return repository.findByMarcaContainingIgnoreCase(marca)
+        return repository.findByMarcaNomeContainingIgnoreCase(marca)
     }
 
     fun atualizar(id: Long, caixa: CaixaDAgua): ResponseEntity<String> {
@@ -42,8 +42,8 @@ class CaixaDAguaService(
             NoSuchElementException("O $id digitado não é válido")
         }
         //Usa o id que já existe pra atualizar
-        val atualizada = CaixaDAgua(resposta.id, caixa.marca, caixa.modelo, caixa.dimensao,
-            caixa.cor, caixa.material, caixa.formato, caixa.preco, caixa.funcionario)
+        val atualizada = CaixaDAgua(resposta.id, caixa.marca, caixa.capacidadeLitros, caixa.altura, caixa.largura,
+            caixa.cor, caixa.material, caixa.formato, caixa.preco, caixa.estoque)
 
         repository.save(atualizada)
         return ResponseEntity.status(HttpStatus.OK)

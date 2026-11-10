@@ -14,15 +14,17 @@ class CaixaDAgua(
     @Id
     @GeneratedValue(GenerationType.SEQUENCE)
     val id : Long? = null,
-    val marca : String,
-    val modelo : String,
-    val dimensao : MutableList<Double>,
+    @ManyToOne
+    val marca : Marca,
+    val capacidadeLitros : Int,
+    val altura : Double,
+    val largura : Double,        //na redonda é o diâmetro
     @Enumerated(EnumType.STRING)
     val cor : Cor,
     @Enumerated(EnumType.STRING)
     val material : Material,
-    val formato : String,
+    @Enumerated(EnumType.STRING)
+    val formato : Formato,
     val preco : BigDecimal,
-    @ManyToOne
-    val funcionario: Funcionario? = null
+    val estoque : Int
 )
