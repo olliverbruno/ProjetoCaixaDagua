@@ -1,4 +1,4 @@
-// Valores aceitos pelo enum Cargo do back-end.
+//valores do enum
 const cargos = ['VENDEDOR', 'INSTALADOR'];
 
 class Funcionario {
@@ -58,7 +58,7 @@ class Funcionario {
         ativo: json['ativo'] ?? true,
       );
 
-  // Converte o objeto em JSON. As datas vão no formato aaaa-mm-dd que a API espera.
+  //data no formato aaaa-mm-dd
   Map<String, dynamic> toJson() => {
         if (id != null) 'id': id,
         'cpf': cpf,

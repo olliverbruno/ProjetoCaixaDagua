@@ -23,7 +23,7 @@ class Venda {
     this.dataInstalacao,
   });
 
-  // Uma venda contém outros objetos (cliente, vendedor, instalador) e uma lista de caixas.
+  //venda tem cliente, vendedor, instalador e caixas
   factory Venda.fromJson(Map<String, dynamic> json) => Venda(
         id: json['id'],
         dataVenda: DateTime.parse(json['dataVenda']),
@@ -35,7 +35,7 @@ class Venda {
         dataInstalacao: json['dataInstalacao'] == null ? null : DateTime.parse(json['dataInstalacao']),
       );
 
-  // Usado no PUT de atualizar: a API pede a venda completa.
+  //usado no atualizar
   Map<String, dynamic> toJson() => {
         'id': id,
         'dataVenda': dataVenda.toIso8601String().substring(0, 10),

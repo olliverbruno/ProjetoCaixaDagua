@@ -1,4 +1,4 @@
-// Valores aceitos pelo enum UF do back-end.
+//valores do enum
 const ufs = [
   'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA',
   'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO',
@@ -58,8 +58,7 @@ class Cliente {
         ativo: json['ativo'] ?? true,
       );
 
-  // Converte o objeto em JSON. A data vai no formato aaaa-mm-dd que a API espera.
-  // A data de cadastro não é enviada: quem define é o back-end.
+  //data no formato aaaa-mm-dd
   Map<String, dynamic> toJson() => {
         if (id != null) 'id': id,
         'cpf': cpf,

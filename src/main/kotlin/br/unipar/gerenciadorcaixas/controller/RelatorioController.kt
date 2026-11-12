@@ -21,9 +21,9 @@ class RelatorioController(
         val pdf = service.gerarRelatorio()
 
         val headers = HttpHeaders().apply {
-            // Define o tipo de conteúdo como PDF
+            //tipo PDF
             contentType = MediaType.APPLICATION_PDF
-            // Faz o navegador baixar o arquivo com um nome específico
+            //baixa o arquivo com esse nome
             setContentDispositionFormData("attachment", "relatorio-pessoas.pdf")
         }
 

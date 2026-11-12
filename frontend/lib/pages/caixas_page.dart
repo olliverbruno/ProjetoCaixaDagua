@@ -27,7 +27,7 @@ class _CaixasPageState extends State<CaixasPage> {
   Future<void> _carregar() async {
     setState(() => _carregando = true);
     try {
-      // Com texto na busca, filtra pela marca; sem texto, lista todas.
+      //se tiver texto busca pela marca
       final marca = _busca.text.trim();
       _itens = marca.isEmpty ? await _api.listarCaixas() : await _api.buscarCaixasPorMarca(marca);
     } catch (e) {
@@ -47,9 +47,9 @@ class _CaixasPageState extends State<CaixasPage> {
     return n == null || n < 0 ? 'Informe um número inteiro válido.' : null;
   }
 
-  // Sem caixa abre para cadastrar (POST); com caixa abre para editar (PUT).
+  //sem caixa cadastra, com caixa edita
   Future<void> _formulario([Caixa? caixa]) async {
-    // A marca é escolhida numa lista vinda do cadastro de marcas.
+    //marcas pro combo
     List<Marca> marcas;
     try {
       marcas = await _api.listarMarcas();

@@ -20,8 +20,7 @@ class ApiService {
 
   static const _headers = {'Content-Type': 'application/json; charset=UTF-8'};
 
-  // Interpreta a resposta e transforma erros HTTP em mensagens úteis para a tela.
-  // Nossa API devolve JSON nas listas e texto nas mensagens (ex.: "Marca FORTLEV já cadastrada").
+  //trata a resposta, a API manda texto nas mensagens
   dynamic _processar(http.Response response) {
     final texto = utf8.decode(response.bodyBytes);
     dynamic body;
@@ -37,7 +36,7 @@ class ApiService {
         : mensagem.toString());
   }
 
-  // ---------- Clientes ----------
+  //Clientes
   Future<List<Cliente>> listarClientes() async {
     final response = await _client.get(Uri.parse('${ApiConfig.baseUrl}/cliente/listar'));
     return (_processar(response) as List).map((e) => Cliente.fromJson(e)).toList();
@@ -52,7 +51,7 @@ class ApiService {
     _processar(await _client.delete(Uri.parse('${ApiConfig.baseUrl}/cliente/excluir/$id')));
   }
 
-  // ---------- Funcionários ----------
+  //Funcionarios
   Future<List<Funcionario>> listarFuncionarios() async {
     final response = await _client.get(Uri.parse('${ApiConfig.baseUrl}/funcionario/listar'));
     return (_processar(response) as List).map((e) => Funcionario.fromJson(e)).toList();
@@ -67,13 +66,13 @@ class ApiService {
     _processar(await _client.delete(Uri.parse('${ApiConfig.baseUrl}/funcionario/excluir/$id')));
   }
 
-  // ---------- Marcas ----------
+  //Marcas
   Future<List<Marca>> listarMarcas() async {
     final response = await _client.get(Uri.parse('${ApiConfig.baseUrl}/marca/listar'));
     return (_processar(response) as List).map((e) => Marca.fromJson(e)).toList();
   }
 
-  // Sem id cadastra (POST); com id atualiza (PUT).
+  //sem id salva, com id atualiza
   Future<void> salvarMarca(Marca marca) async {
     final response = marca.id == null
         ? await _client.post(Uri.parse('${ApiConfig.baseUrl}/marca/salvar'),
@@ -87,19 +86,19 @@ class ApiService {
     _processar(await _client.delete(Uri.parse('${ApiConfig.baseUrl}/marca/excluir/$id')));
   }
 
-  // ---------- Caixas d'água ----------
+  //Caixas
   Future<List<Caixa>> listarCaixas() async {
     final response = await _client.get(Uri.parse('${ApiConfig.baseUrl}/listar'));
     return (_processar(response) as List).map((e) => Caixa.fromJson(e)).toList();
   }
 
-  // Busca as caixas cuja marca contém o texto informado.
+  //busca pela marca
   Future<List<Caixa>> buscarCaixasPorMarca(String marca) async {
     final response = await _client.get(Uri.parse('${ApiConfig.baseUrl}/marcas/${Uri.encodeComponent(marca)}'));
     return (_processar(response) as List).map((e) => Caixa.fromJson(e)).toList();
   }
 
-  // Sem id cadastra (POST); com id atualiza (PUT).
+  //sem id salva, com id atualiza
   Future<void> salvarCaixa(Caixa caixa) async {
     final response = caixa.id == null
         ? await _client.post(Uri.parse('${ApiConfig.baseUrl}/salvar'),
@@ -113,14 +112,13 @@ class ApiService {
     _processar(await _client.delete(Uri.parse('${ApiConfig.baseUrl}/excluir/$id')));
   }
 
-  // ---------- Vendas ----------
+  //Vendas
   Future<List<Venda>> listarVendas() async {
     final response = await _client.get(Uri.parse('${ApiConfig.baseUrl}/venda/listar'));
     return (_processar(response) as List).map((e) => Venda.fromJson(e)).toList();
   }
 
-  // O front não envia preço nem total: a API confere o estoque, soma o total e baixa o estoque.
-  // Para vender 2 unidades da mesma caixa, ela aparece 2 vezes na lista.
+  //preço e total quem calcula é o back
   Future<void> criarVenda({
     required Cliente cliente,
     required Funcionario vendedor,
@@ -140,13 +138,13 @@ class ApiService {
     _processar(response);
   }
 
-  // A API só altera o instalador e a data da instalação.
+  //so muda instalador e data
   Future<void> atualizarVenda(Venda venda) async {
     _processar(await _client.put(Uri.parse('${ApiConfig.baseUrl}/venda/atualizar/${venda.id}'),
         headers: _headers, body: jsonEncode(venda.toJson())));
   }
 
-  // Excluir a venda devolve as caixas ao estoque.
+  //excluir devolve pro estoque
   Future<void> excluirVenda(int id) async {
     _processar(await _client.delete(Uri.parse('${ApiConfig.baseUrl}/venda/excluir/$id')));
   }

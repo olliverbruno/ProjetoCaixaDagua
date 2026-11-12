@@ -21,7 +21,7 @@ class VendaService(
 ) {
 
     fun salvar(venda: Venda): ResponseEntity<String> {
-        //Busca no banco pelo id para conferir os dados de verdade
+        //busca no banco pra conferir
         val cliente = clienteRepository.findById(venda.cliente.id).orElseThrow {
             NoSuchElementException("O cliente ${venda.cliente.id} não existe")
         }
@@ -43,7 +43,7 @@ class VendaService(
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("A venda precisa ter pelo menos uma caixa")
         }
 
-        //Confere o estoque e soma o total, a mesma caixa repetida conta como mais uma unidade
+        //confere estoque e soma o total
         val caixas = mutableListOf<CaixaDAgua>()
         var total = BigDecimal.ZERO
         for (item in venda.caixas) {
@@ -59,7 +59,7 @@ class VendaService(
             total = total.add(caixa.preco)
         }
 
-        //Só desconta o estoque depois de conferir tudo
+        //desconta do estoque
         for (caixa in caixas) {
             alterarEstoque(caixa.id!!, -1)
         }
@@ -84,7 +84,7 @@ class VendaService(
 
     }
 
-    //Atualiza só o instalador e a data da instalação, o resto da venda não muda
+    //so muda instalador e data
     fun atualizar(id: Long, venda: Venda): ResponseEntity<String> {
         val resposta = repository.findById(id).orElseThrow {
             NoSuchElementException("O $id digitado não é válido")
@@ -110,7 +110,7 @@ class VendaService(
         val resposta = repository.findById(id).orElseThrow {
             NoSuchElementException("O $id digitado não é válido")
         }
-        //Devolve as caixas para o estoque
+        //devolve pro estoque
         for (caixa in resposta.caixas) {
             alterarEstoque(caixa.id!!, 1)
         }
@@ -119,7 +119,7 @@ class VendaService(
 
     }
 
-    //Soma ou subtrai do estoque da caixa
+    //soma ou tira do estoque
     private fun alterarEstoque(idCaixa: Long, quantidade: Int) {
         val caixa = caixaRepository.findById(idCaixa).orElseThrow {
             NoSuchElementException("A caixa $idCaixa não existe")

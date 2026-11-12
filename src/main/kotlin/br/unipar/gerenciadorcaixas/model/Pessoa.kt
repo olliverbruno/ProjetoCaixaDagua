@@ -30,6 +30,6 @@ open class Pessoa(
     @Enumerated(EnumType.STRING)
     val uf : UF
 ) {
-    //Cidade sempre em maiúsculo e sem espaço sobrando
+    //cidade maiuscula e sem espaço
     val cidade : String = cidade.trim().uppercase()
 }

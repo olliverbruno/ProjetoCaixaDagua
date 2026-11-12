@@ -37,7 +37,7 @@ class _VendasPageState extends State<VendasPage> {
     }
   }
 
-  // Lê a data digitada no formato dd/mm/aaaa. Devolve null se estiver errada.
+  //le a data dd/mm/aaaa
   DateTime? _lerData(String texto) {
     try {
       return _data.parseStrict(texto.trim());
@@ -46,7 +46,7 @@ class _VendasPageState extends State<VendasPage> {
     }
   }
 
-  // Junta as caixas repetidas da venda para mostrar a quantidade de cada uma.
+  //conta as caixas repetidas
   Map<int, int> _quantidades(List<Caixa> caixas) {
     final quantidades = <int, int>{};
     for (final c in caixas) {
@@ -162,7 +162,7 @@ class _VendasPageState extends State<VendasPage> {
                                     mostrarMensagem(context, 'Informe a data como dd/mm/aaaa.', erro: true);
                                     return;
                                   }
-                                  // A API recebe a mesma caixa uma vez para cada unidade vendida.
+                                  //uma caixa pra cada unidade
                                   final caixasVendidas = <Caixa>[];
                                   for (final item in itens) {
                                     for (var i = 0; i < (item['quantidade'] as int); i++) {
@@ -195,7 +195,7 @@ class _VendasPageState extends State<VendasPage> {
     }
   }
 
-  // Define ou troca o instalador e a data da instalação (PUT /venda/atualizar).
+  //define o instalador
   Future<void> _definirInstalacao(Venda venda) async {
     try {
       final funcionarios = await _api.listarFuncionarios();
@@ -269,7 +269,7 @@ class _VendasPageState extends State<VendasPage> {
     }
   }
 
-  // Excluir a venda devolve as caixas ao estoque.
+  //excluir devolve pro estoque
   Future<void> _excluir(Venda venda) async {
     if (!await confirmarExclusao(context, 'venda #${venda.id}')) return;
     try {

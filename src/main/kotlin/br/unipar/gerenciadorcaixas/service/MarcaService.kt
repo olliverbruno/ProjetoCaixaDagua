@@ -46,7 +46,7 @@ class MarcaService(
         if (marca.nome.isBlank()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Nome da marca não pode ser vazio")
         }
-        //Não deixa trocar para um nome que outra marca já usa
+        //nao deixa repetir o nome
         if (repository.existsByNomeAndIdNot(marca.nome, id)) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Marca ${marca.nome} já cadastrada")
         }
@@ -60,7 +60,7 @@ class MarcaService(
         val resposta = repository.findById(id).orElseThrow {
             NoSuchElementException("O $id digitado não é válido")
         }
-        //Marca usada em alguma caixa não pode ser apagada
+        //se tiver caixa usando nao apaga
         val emUso = caixaRepository.countByMarca(resposta)
         if (emUso > 0) {
             return ResponseEntity.status(HttpStatus.CONFLICT)

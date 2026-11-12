@@ -8,6 +8,6 @@ class Marca {
   factory Marca.fromJson(Map<String, dynamic> json) =>
       Marca(id: json['id'] as int?, nome: json['nome'] ?? '');
 
-  // Converte o objeto em JSON. O id vai junto quando a marca já existe.
+  //manda o id se ja existir
   Map<String, dynamic> toJson() => {if (id != null) 'id': id, 'nome': nome};
 }

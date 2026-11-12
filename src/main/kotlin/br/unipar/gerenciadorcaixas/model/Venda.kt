@@ -21,7 +21,7 @@ class Venda(
     val vendedor : Funcionario,
     @ManyToOne
     val instalador : Funcionario? = null,
-    //N para N, uma venda tem varias caixas e uma caixa aparece em varias vendas
+    //N para N
     @ManyToMany
     val caixas : MutableList<CaixaDAgua>,
     val valorTotal : BigDecimal = BigDecimal.ZERO,

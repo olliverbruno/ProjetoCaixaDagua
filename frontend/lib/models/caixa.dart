@@ -1,6 +1,6 @@
 import 'marca.dart';
 
-// Valores aceitos pelos enums Cor, Material e Formato do back-end.
+//valores do enum
 const cores = ['AZUL', 'CINZA', 'PRETO'];
 const materiais = ['PVC', 'FIBRA', 'POLIETILENO'];
 const formatos = ['REDONDA', 'QUADRADA', 'RETANGULAR'];
@@ -30,7 +30,7 @@ class Caixa {
     required this.estoque,
   });
 
-  // A marca chega como outro objeto JSON dentro da caixa.
+  //marca vem dentro da caixa
   factory Caixa.fromJson(Map<String, dynamic> json) => Caixa(
         id: json['id'] as int?,
         marca: Marca.fromJson(json['marca']),

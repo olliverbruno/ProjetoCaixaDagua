@@ -13,7 +13,7 @@ class Marca(
     val id : Long? = null,
     nome : String
 ) {
-    //Salva sempre em maiúsculo e sem espaço sobrando
+    //deixa maiusculo e tira os espaços
     @Column(unique = true)
     val nome : String = nome.trim().uppercase()
 }

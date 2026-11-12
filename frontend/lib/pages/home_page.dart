@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'caixas_page.dart';
-import 'clientes_page.dart';
-import 'funcionarios_page.dart';
 import 'marcas_page.dart';
+import 'pessoas_page.dart';
 import 'vendas_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,11 +12,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _indice = 0;
-  final _paginas = const [ClientesPage(), FuncionariosPage(), MarcasPage(), CaixasPage(), VendasPage()];
-  final _titulos = const ['Clientes', 'Funcionários', 'Marcas', 'Caixas d\'água', 'Vendas'];
+  final _paginas = const [PessoasPage(), MarcasPage(), CaixasPage(), VendasPage()];
+  final _titulos = const ['Pessoas', 'Marcas', 'Caixas d\'água', 'Vendas'];
   final _destinos = const [
-    NavigationDestination(icon: Icon(Icons.people_outline), selectedIcon: Icon(Icons.people), label: 'Clientes'),
-    NavigationDestination(icon: Icon(Icons.badge_outlined), selectedIcon: Icon(Icons.badge), label: 'Funcionários'),
+    NavigationDestination(icon: Icon(Icons.people_outline), selectedIcon: Icon(Icons.people), label: 'Pessoas'),
     NavigationDestination(icon: Icon(Icons.label_outline), selectedIcon: Icon(Icons.label), label: 'Marcas'),
     NavigationDestination(
         icon: Icon(Icons.water_drop_outlined), selectedIcon: Icon(Icons.water_drop), label: 'Caixas'),

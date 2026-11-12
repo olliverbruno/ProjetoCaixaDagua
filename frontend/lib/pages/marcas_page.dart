@@ -31,8 +31,7 @@ class _MarcasPageState extends State<MarcasPage> {
     }
   }
 
-  // Sem marca abre para cadastrar (POST); com marca abre para editar (PUT).
-  // O back-end grava o nome em maiúsculas e não aceita marca repetida.
+  //sem marca cadastra, com marca edita
   Future<void> _abrirFormulario([Marca? marca]) async {
     final formKey = GlobalKey<FormState>();
     final nome = TextEditingController(text: marca?.nome);
@@ -70,7 +69,7 @@ class _MarcasPageState extends State<MarcasPage> {
     }
   }
 
-  // Se a marca estiver em uso, a API devolve a mensagem explicando quantas caixas usam a marca.
+  //se tiver em uso o back manda a mensagem
   Future<void> _excluir(Marca marca) async {
     if (!await confirmarExclusao(context, marca.nome)) return;
     try {
