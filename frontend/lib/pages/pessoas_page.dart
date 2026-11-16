@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
+import '../config/api_config.dart';
 import '../models/cliente.dart';
 import '../models/funcionario.dart';
 import '../services/api_service.dart';
@@ -307,8 +309,23 @@ class _PessoasPageState extends State<PessoasPage> {
                       },
                     ),
             ),
-      floatingActionButton: FloatingActionButton.extended(
-          onPressed: () => _abrirFormulario(), icon: const Icon(Icons.add), label: const Text('Nova pessoa')),
+      floatingActionButton: Row(mainAxisSize: MainAxisSize.min, children: [
+        FloatingActionButton.extended(
+            heroTag: 'relatorio',
+            onPressed: _abrirRelatorio,
+            icon: const Icon(Icons.picture_as_pdf),
+            label: const Text('Relatório')),
+        const SizedBox(width: 12),
+        FloatingActionButton.extended(
+            heroTag: 'novaPessoa',
+            onPressed: () => _abrirFormulario(), icon: const Icon(Icons.add), label: const Text('Nova pessoa')),
+      ]),
     );
+  }
+
+  //abre o pdf que o back gera
+  Future<void> _abrirRelatorio() async {
+    final ok = await launchUrl(Uri.parse('${ApiConfig.baseUrl}/relatorio/pessoa'));
+    if (!ok && mounted) mostrarMensagem(context, 'Não foi possível abrir o relatório', erro: true);
   }
 }
