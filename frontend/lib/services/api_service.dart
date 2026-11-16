@@ -42,9 +42,14 @@ class ApiService {
     return (_processar(response) as List).map((e) => Cliente.fromJson(e)).toList();
   }
 
+  //sem id salva, com id atualiza
   Future<void> salvarCliente(Cliente cliente) async {
-    _processar(await _client.post(Uri.parse('${ApiConfig.baseUrl}/cliente/salvar'),
-        headers: _headers, body: jsonEncode(cliente.toJson())));
+    final response = cliente.id == null
+        ? await _client.post(Uri.parse('${ApiConfig.baseUrl}/cliente/salvar'),
+            headers: _headers, body: jsonEncode(cliente.toJson()))
+        : await _client.put(Uri.parse('${ApiConfig.baseUrl}/cliente/atualizar/${cliente.id}'),
+            headers: _headers, body: jsonEncode(cliente.toJson()));
+    _processar(response);
   }
 
   Future<void> excluirCliente(int id) async {
@@ -57,9 +62,14 @@ class ApiService {
     return (_processar(response) as List).map((e) => Funcionario.fromJson(e)).toList();
   }
 
+  //sem id salva, com id atualiza
   Future<void> salvarFuncionario(Funcionario funcionario) async {
-    _processar(await _client.post(Uri.parse('${ApiConfig.baseUrl}/funcionario/salvar'),
-        headers: _headers, body: jsonEncode(funcionario.toJson())));
+    final response = funcionario.id == null
+        ? await _client.post(Uri.parse('${ApiConfig.baseUrl}/funcionario/salvar'),
+            headers: _headers, body: jsonEncode(funcionario.toJson()))
+        : await _client.put(Uri.parse('${ApiConfig.baseUrl}/funcionario/atualizar/${funcionario.id}'),
+            headers: _headers, body: jsonEncode(funcionario.toJson()));
+    _processar(response);
   }
 
   Future<void> excluirFuncionario(int id) async {

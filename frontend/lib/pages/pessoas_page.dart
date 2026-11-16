@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:web/web.dart' as web;
 import '../config/api_config.dart';
 import '../models/cliente.dart';
 import '../models/funcionario.dart';
@@ -70,32 +70,38 @@ class _PessoasPageState extends State<PessoasPage> {
 
   String? _dataValida(String? v) => _lerData(v ?? '') == null ? 'Informe a data como dd/mm/aaaa.' : null;
 
-  Future<void> _abrirFormulario() async {
+  //sem item cadastra, com item edita
+  Future<void> _abrirFormulario([Map<String, dynamic>? item]) async {
+    final editando = item != null;
+    //cliente e funcionario tem os mesmos campos de pessoa
+    final dynamic p = item?['pessoa'];
+    final f = item?['tipo'] == 'FUNCIONARIO' ? p as Funcionario : null;
+    final c = item?['tipo'] == 'CLIENTE' ? p as Cliente : null;
     final formKey = GlobalKey<FormState>();
-    final nome = TextEditingController();
-    final cpf = TextEditingController();
-    final telefone = TextEditingController();
-    final email = TextEditingController();
-    final dataNascimento = TextEditingController();
-    final cep = TextEditingController();
-    final logradouro = TextEditingController();
-    final numero = TextEditingController();
-    final bairro = TextEditingController();
-    final cidade = TextEditingController();
-    final observacao = TextEditingController();
-    final salario = TextEditingController(text: '0,00');
-    final dataAdmissao = TextEditingController();
+    final nome = TextEditingController(text: p?.nome ?? '');
+    final cpf = TextEditingController(text: p?.cpf ?? '');
+    final telefone = TextEditingController(text: p?.telefone ?? '');
+    final email = TextEditingController(text: p?.email ?? '');
+    final dataNascimento = TextEditingController(text: p == null ? '' : _data.format(p.dataNascimento));
+    final cep = TextEditingController(text: p?.cep ?? '');
+    final logradouro = TextEditingController(text: p?.logradouro ?? '');
+    final numero = TextEditingController(text: p?.numero ?? '');
+    final bairro = TextEditingController(text: p?.bairro ?? '');
+    final cidade = TextEditingController(text: p?.cidade ?? '');
+    final observacao = TextEditingController(text: c?.observacao ?? '');
+    final salario = TextEditingController(text: (f?.salario ?? 0).toStringAsFixed(2).replaceAll('.', ','));
+    final dataAdmissao = TextEditingController(text: f == null ? '' : _data.format(f.dataAdmissao));
     //sempre tem um marcado
-    String tipo = 'CLIENTE';
-    String? uf;
-    String? cargo;
-    bool ativo = true;
+    String tipo = item?['tipo'] ?? 'CLIENTE';
+    String? uf = p?.uf;
+    String? cargo = f?.cargo;
+    bool ativo = p?.ativo ?? true;
 
     final salvo = await showDialog<bool>(
         context: context,
         builder: (context) => StatefulBuilder(
             builder: (context, setDialogState) => AlertDialog(
-                  title: const Text('Nova pessoa'),
+                  title: Text(editando ? 'Editar pessoa' : 'Nova pessoa'),
                   content: SizedBox(
                       width: 520,
                       child: Form(
@@ -109,7 +115,8 @@ class _PessoasPageState extends State<PessoasPage> {
                                       value: 'FUNCIONARIO', label: Text('Funcionário'), icon: Icon(Icons.badge))
                                 ],
                                 selected: {tipo},
-                                onSelectionChanged: (v) => setDialogState(() => tipo = v.first)),
+                                //na edicao nao troca o tipo
+                                onSelectionChanged: editando ? null : (v) => setDialogState(() => tipo = v.first)),
                             const SizedBox(height: 16),
                             TextFormField(
                                 controller: nome,
@@ -208,6 +215,7 @@ class _PessoasPageState extends State<PessoasPage> {
                           try {
                             if (tipo == 'CLIENTE') {
                               await _api.salvarCliente(Cliente(
+                                  id: c?.id,
                                   cpf: cpf.text.trim(),
                                   nome: nome.text.trim(),
                                   telefone: telefone.text.trim(),
@@ -223,6 +231,7 @@ class _PessoasPageState extends State<PessoasPage> {
                                   ativo: ativo));
                             } else {
                               await _api.salvarFuncionario(Funcionario(
+                                  id: f?.id,
                                   cpf: cpf.text.trim(),
                                   nome: nome.text.trim(),
                                   telefone: telefone.text.trim(),
@@ -303,6 +312,7 @@ class _PessoasPageState extends State<PessoasPage> {
                             const SizedBox(width: 8),
                             Icon(ativo ? Icons.check_circle : Icons.block,
                                 color: ativo ? Colors.green : Colors.grey),
+                            IconButton(onPressed: () => _abrirFormulario(item), icon: const Icon(Icons.edit_outlined)),
                             IconButton(onPressed: () => _excluir(item), icon: const Icon(Icons.delete_outline))
                           ]),
                         ));
@@ -324,8 +334,8 @@ class _PessoasPageState extends State<PessoasPage> {
   }
 
   //abre o pdf que o back gera
-  Future<void> _abrirRelatorio() async {
-    final ok = await launchUrl(Uri.parse('${ApiConfig.baseUrl}/relatorio/pessoa'));
-    if (!ok && mounted) mostrarMensagem(context, 'Não foi possível abrir o relatório', erro: true);
+  void _abrirRelatorio() {
+    final aba = web.window.open('${ApiConfig.baseUrl}/relatorio/pessoa', '_blank');
+    if (aba == null) mostrarMensagem(context, 'Não foi possível abrir o relatório', erro: true);
   }
 }
